@@ -46,6 +46,16 @@ app.get('/login', function (req, res) {
     }
 });
 
+// JSON login creating a session secret key/any variable during testing
+app.get('/json/login', function (req, res) {
+    if (!req.query.secretKey || req.query.secretKey !== "virtusa") {
+        res.json({ error: "Wrong Credentials" });
+    } else if(req.query.secretKey === "virtusa") {
+        req.session.secret = "virtusa";
+        res.json({success: "Session variable has been saved"});
+    }
+});
+
 // Destroy the current user session
 app.get('/logout', function (req, res) {
     req.session.destroy();
@@ -63,3 +73,5 @@ app.use((req, res) => {
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, console.log(`Server started on port ${PORT}`));
+
+module.exports = app; // for testing

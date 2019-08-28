@@ -10,7 +10,7 @@ var auth = function(req, res, next) {
     if (req.session && req.session.secret === "virtusa")
         return next();
     else
-        return res.status(401).render('error', { err: "Unauthorized Access" });
+        return res.status(401).json({error: "Unauthorized Access"});
 };
 
 // Returns all the users saved in the database
@@ -19,7 +19,9 @@ router.get( "/", auth, (req, res) => {
         .then(result => {
             res.json(result)
         })
-        .catch(err => console.log(err));
+        .catch(err => {
+            res.json(err)
+        });
 });
 
 // Returns the user saved in the database with primary key id given

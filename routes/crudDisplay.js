@@ -25,13 +25,13 @@ router.get( "/", auth, (req, res) => {
 
 // Renders the add page for POST
 router.get("/create", auth, (req, res) => {
-    res.render('add', { result: null, action: "/users/add", buttonText="Add" });
+    res.render('add', { result: null, action: "/users/add", buttonText: "Add" });
 });
 
 // Renders the add page for Update for the given id and loads error page in case of error
 router.get("/update/:id", auth, (req, res) => {
     Vuser.findByPk(req.params.id).then(result => {
-        res.render('add', { result, action: "/users/updateUser", buttonText="Update" });
+        res.render('add', { result, action: "/users/updateUser", buttonText: "Update" });
     }).catch(err => {
         res.render('error', { err });
     });

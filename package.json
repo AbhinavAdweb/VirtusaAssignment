@@ -4,13 +4,14 @@
   "description": "Assignment by Virtusa for creat/displaying users",
   "main": "app.js",
   "scripts": {
-    "test": "mocha",
+    "test": "mocha --exit",
     "start": "nodemon app.js"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/AbhinavAdweb/VirtusaAssignment.git"
   },
+
   "author": "Abhinav Ojha",
   "homepage": "https://github.com/AbhinavAdweb/VirtusaAssignment#readme",
   "dependencies": {
@@ -22,7 +23,10 @@
     "mysql2": "^1.6.5",
     "sequelize": "^5.16.0"
   },
+
   "devDependencies": {
+    "chai": "^4.2.0",
+    "chai-http": "^4.3.0",
     "mocha": "^6.2.0",
     "nodemon": "^1.19.1"
   }
