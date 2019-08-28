@@ -20,6 +20,21 @@ describe('Users', () => {
     }).then(done());
   });
 
+  // Testing unauthenticated request
+  describe('/GET user', () => {
+      it('it should NOT GET all the users and instead return Unauthorized Access error', (done) => {
+        chai.request(app)
+            .get('/json/users')
+            .end((err, res) => {
+                  res.should.have.status(401);
+                  res.body.should.be.a('object');
+
+                  res.body.should.have.property('error').eql("Unauthorized Access");
+              done();
+            });
+      });
+  });
+
   //Test the /GET route
   describe('/GET users', () => {
     it('it should GET all the users', (done) => {
