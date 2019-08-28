@@ -1,6 +1,7 @@
 const Sequelize = require('sequelize');
 const db = require('../config/database');
 
+// Vuser model definition
 const Vuser = db.define('vuser', {
   id: {
     type: Sequelize.INTEGER,
