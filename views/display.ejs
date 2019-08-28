@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Users</title>
+</head>
+<body>
+    <% if(result) { %>
+        <table>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Age</th>
+                <th>Email</th>
+                <th>Actions</th>
+            </tr>
+        
+            <% result.forEach(function(user) { %>
+            <tr>
+                <td><%= user.id %></td>
+                <td><%= user.name %></td>
+                <td><%= user.age %></td>
+                <td><%= user.email %></td>
+                <td><a href="/users/update/<%= user.id %>">Update</a> | <a href="/users/deleteUser/<%= user.id %>">Delete</a></td>
+            </tr>    
+            <% }); %>
+        </table>
+    <% } else{ %>
+        <p>No Users have been added yet!</p>
+    <% } %>
+
+    <p><a href="/users/create">Add Users</a> | <a href="/logout">Log Out</a></p>
+</body>
+</html>

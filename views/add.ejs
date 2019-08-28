@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Add User</title>
+</head>
+<body>
+    <h1>User Details</h1>
+    <p>Please enter the below details to create a User:</p>
+    
+    <form name="userDetails" method="POST" action="<%= action %>">
+
+        <input type="hidden" name="id" value="<%= result ? result.id : '' %>" >
+
+        <table>
+            <tr>
+                <td>Name</td>
+                <td><input type="text" name="name" value="<%= result ? result.name : '' %>" ></td>
+            </tr>
+            <tr>
+                <td>Age</td>
+                <td><input type="text" name="age" value="<%= result ? result.age : '' %>" ></td>
+            </tr>
+            <tr>
+                <td>Email</td>
+                <td><input type="text" name="email" value="<%= result ? result.email : '' %>" ></td>
+            </tr>
+            <tr>
+                <td colspan="2"><input type="submit" value="Add"></td>
+            </tr>
+        </table>
+    </form>
+
+    <p><a href="/users">Go Back</a> | <a href="/logout">Log Out</a></p>
+</body>
+</html>
