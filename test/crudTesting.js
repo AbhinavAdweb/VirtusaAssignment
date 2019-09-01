@@ -22,32 +22,35 @@ describe('Users', () => {
 
   // Testing unauthenticated request
   describe('/GET user', () => {
-      it('it should NOT GET all the users and instead return Unauthorized Access error', (done) => {
-        chai.request(app)
-            .get('/json/users')
-            .end((err, res) => {
-                  res.should.have.status(401);
-                  res.body.should.be.a('object');
+    it('it should NOT GET all the users and instead return Unauthorized Access error', (done) => {
 
-                  res.body.should.have.property('error').eql("Unauthorized Access");
-              done();
-            });
-      });
+      agent.get('/json/users')
+        .end((err, res) => {
+          res.should.have.status(401);
+          res.body.should.be.a('object');
+
+          res.body.should.have.property('error').eql("Unauthorized Access");
+          done();
+        });
+    });
   });
+
+  const credOptions = {
+    user: "virtusa",
+    pass: "virtusa",
+    type: "basic"
+  };
 
   //Test the /GET route
   describe('/GET users', () => {
     it('it should GET all the users', (done) => {
-      agent.get('/json/login')
-        .query({ secretKey: 'virtusa' })
-        .then(loginRes => {
-          agent.get('/json/users')
-            .end((err, res) => {
-              res.should.have.status(200);
-              res.body.should.be.a('array');
-              res.body.length.should.be.eql(0);
-              done();
-            });
+      agent.get('/json/users')
+        .auth('virtusa', 'virtusa')
+        .end((err, res) => {
+          res.should.have.status(200);
+          res.body.should.be.a('array');
+          res.body.length.should.be.eql(0);
+          done();
         });
     });
   });
@@ -61,23 +64,20 @@ describe('Users', () => {
         email: "abhinavojha93@gmail.com"
       }
 
-      agent.get('/json/login')
-        .query({ secretKey: 'virtusa' })
-        .then(loginRes => {
-          agent.post('/json/users/add')
-            .send(user)
-            .end((err, res) => {
-              res.should.have.status(200);
-              res.body.should.be.a('object');
+      agent.post('/json/users/add')
+        .auth('virtusa', 'virtusa')
+        .send(user)
+        .end((err, res) => {
+          res.should.have.status(200);
+          res.body.should.be.a('object');
 
-              res.body.should.have.property('id');
-              res.body.should.have.property('name');
-              res.body.should.have.property('age');
-              res.body.should.have.property('email');
-              res.body.should.have.property('updatedAt');
-              res.body.should.have.property('createdAt');
-              done();
-            });
+          res.body.should.have.property('id');
+          res.body.should.have.property('name');
+          res.body.should.have.property('age');
+          res.body.should.have.property('email');
+          res.body.should.have.property('updatedAt');
+          res.body.should.have.property('createdAt');
+          done();
         });
     });
   });
@@ -91,24 +91,22 @@ describe('Users', () => {
         email: "xyz@ex.com"
       });
 
-      agent.get('/json/login')
-        .query({ secretKey: 'virtusa' })
-        .then(loginRes => {
-          user.save()
-            .then(result => {
-              agent.get('/json/users/' + result.id)
-                .end((err, res) => {
-                  res.should.have.status(200);
-                  res.body.should.be.a('object');
 
-                  res.body.should.have.property('name');
-                  res.body.should.have.property('age');
-                  res.body.should.have.property('email');
-                  res.body.should.have.property('updatedAt');
-                  res.body.should.have.property('createdAt');
-                  res.body.should.have.property('id').eql(result.id);
-                  done();
-                });
+      user.save()
+        .then(result => {
+          agent.get('/json/users/' + result.id)
+            .auth('virtusa', 'virtusa')
+            .end((err, res) => {
+              res.should.have.status(200);
+              res.body.should.be.a('object');
+
+              res.body.should.have.property('name');
+              res.body.should.have.property('age');
+              res.body.should.have.property('email');
+              res.body.should.have.property('updatedAt');
+              res.body.should.have.property('createdAt');
+              res.body.should.have.property('id').eql(result.id);
+              done();
             });
         });
 
@@ -130,20 +128,18 @@ describe('Users', () => {
         email: "abhinavojha93@gmail.com"
       }
 
-      agent.get('/json/login')
-        .query({ secretKey: 'virtusa' })
-        .then(loginRes => {
-          user.save()
-            .then(result => {
-              agent.put('/json/users/' + result.id)
-                .send(updatedUser)
-                .end((err, res) => {
-                  res.should.have.status(200);
-                  res.body.should.be.a('array');
-                  res.body.length.should.be.eql(1);
-                  res.body.should.be.eql([result.id])
-                  done();
-                });
+
+      user.save()
+        .then(result => {
+          agent.put('/json/users/' + result.id)
+            .auth('virtusa', 'virtusa')
+            .send(updatedUser)
+            .end((err, res) => {
+              res.should.have.status(200);
+              res.body.should.be.a('array');
+              res.body.length.should.be.eql(1);
+              res.body.should.be.eql([result.id])
+              done();
             });
         });
 
@@ -159,19 +155,17 @@ describe('Users', () => {
         email: "xyz@ex.com"
       });
 
-      agent.get('/json/login')
-        .query({ secretKey: 'virtusa' })
-        .then(loginRes => {
-          user.save()
-            .then(result => {
-              agent.delete('/json/users/' + result.id)
-                .end((err, res) => {
-                  res.should.have.status(200);
-                  res.body.should.be.a('number');
 
-                  res.body.should.be.eql(result.id)
-                  done();
-                });
+      user.save()
+        .then(result => {
+          agent.delete('/json/users/' + result.id)
+            .auth('virtusa', 'virtusa')
+            .end((err, res) => {
+              res.should.have.status(200);
+              res.body.should.be.a('number');
+
+              res.body.should.be.eql(result.id)
+              done();
             });
         });
 

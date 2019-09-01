@@ -11,19 +11,19 @@
     "type": "git",
     "url": "git+https://github.com/AbhinavAdweb/VirtusaAssignment.git"
   },
-
   "author": "Abhinav Ojha",
   "homepage": "https://github.com/AbhinavAdweb/VirtusaAssignment#readme",
   "dependencies": {
+    "basic-auth": "^2.0.1",
     "body-parser": "^1.19.0",
     "ejs": "^2.6.2",
     "express": "^4.17.1",
     "express-session": "^1.16.2",
     "http-errors": "^1.7.3",
     "mysql2": "^1.6.5",
-    "sequelize": "^5.16.0"
+    "sequelize": "^5.16.0",
+    "tsscmp": "^1.0.6"
   },
-
   "devDependencies": {
     "chai": "^4.2.0",
     "chai-http": "^4.3.0",
